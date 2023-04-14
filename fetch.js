@@ -341,7 +341,7 @@ var getSyncData = /*#__PURE__*/function () {
             }, responseKey, aggregatedResponse));
           case 6:
             if (!response.sync_token) {
-              _context8.next = 12;
+              _context8.next = 14;
               break;
             }
             _context8.next = 9;
@@ -350,13 +350,15 @@ var getSyncData = /*#__PURE__*/function () {
             });
           case 9:
             result = _context8.sent;
-            // console.log('testing....', result);
+            console.log('testing....', result);
+            console.log('ROCK,,,,,,', response, response[responseKey]);
             // const newCheck = result.items;
-            aggregatedResponse = aggregatedResponse.data.concat(result[responseKey]);
+            aggregatedResponse.data = response[responseKey].concat(result[responseKey]);
             aggregatedResponse.sync_token = result.sync_token;
-          case 12:
+          case 14:
+            console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 13:
+          case 16:
           case "end":
             return _context8.stop();
         }
