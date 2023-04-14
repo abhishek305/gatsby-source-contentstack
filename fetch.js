@@ -341,7 +341,7 @@ var getSyncData = /*#__PURE__*/function () {
             }, responseKey, aggregatedResponse));
           case 7:
             if (!response.sync_token) {
-              _context8.next = 12;
+              _context8.next = 14;
               break;
             }
             _context8.next = 10;
@@ -349,10 +349,12 @@ var getSyncData = /*#__PURE__*/function () {
           case 10:
             result = _context8.sent;
             console.log('testing....', result);
-          case 12:
+            aggregatedResponse.data = result[responseKey];
+            aggregatedResponse.sync_token = result.sync_token;
+          case 14:
             console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 14:
+          case 16:
           case "end":
             return _context8.stop();
         }
