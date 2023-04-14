@@ -263,7 +263,7 @@ const getSyncData = async (
     console.log('testing....', result);
     console.log('ROCK,,,,,,', response, aggregatedResponse);
     // const newCheck = result.items;
-    aggregatedResponse = aggregatedResponse.data.concat(...result.items);
+    aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
     aggregatedResponse.sync_token = result.sync_token;
   }
 

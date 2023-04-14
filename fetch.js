@@ -354,7 +354,7 @@ var getSyncData = /*#__PURE__*/function () {
             console.log('testing....', result);
             console.log('ROCK,,,,,,', response, aggregatedResponse);
             // const newCheck = result.items;
-            aggregatedResponse = (_aggregatedResponse$d = aggregatedResponse.data).concat.apply(_aggregatedResponse$d, (0, _toConsumableArray2["default"])(result.items));
+            aggregatedResponse.data = (_aggregatedResponse$d = aggregatedResponse.data) === null || _aggregatedResponse$d === void 0 ? void 0 : _aggregatedResponse$d.concat.apply(_aggregatedResponse$d, (0, _toConsumableArray2["default"])(result.items));
             aggregatedResponse.sync_token = result.sync_token;
           case 14:
             return _context8.abrupt("return", aggregatedResponse);
