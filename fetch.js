@@ -321,7 +321,7 @@ var getSyncData = /*#__PURE__*/function () {
             return fetchCsData(url, config, query);
           case 2:
             response = _context8.sent;
-            console.log('Synced.....', response, response[responseKey]);
+            console.log('Synced.....', response);
             if (!aggregatedResponse) {
               aggregatedResponse = {};
               aggregatedResponse.data = [];
@@ -340,9 +340,18 @@ var getSyncData = /*#__PURE__*/function () {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
           case 7:
+            if (!response.sync_token) {
+              _context8.next = 10;
+              break;
+            }
+            _context8.next = 10;
+            return getSyncData(url, config, query = {
+              sync_token: response.sync_token
+            }, responseKey, aggregatedResponse);
+          case 10:
             console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 9:
+          case 12:
           case "end":
             return _context8.stop();
         }
