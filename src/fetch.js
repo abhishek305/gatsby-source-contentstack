@@ -255,7 +255,11 @@ const getSyncData = async (
   }
 
   if (response.sync_token) {
-    const result = await fetchCsData(url, config, query);
+    const result = await fetchCsData(
+      url,
+      config,
+      (query = { sync_token: response.sync_token })
+    );
     console.log('testing....', result);
     aggregatedResponse.data = result[responseKey];
     aggregatedResponse.sync_token = result.sync_token;

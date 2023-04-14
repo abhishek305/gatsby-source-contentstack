@@ -345,7 +345,9 @@ var getSyncData = /*#__PURE__*/function () {
               break;
             }
             _context8.next = 10;
-            return fetchCsData(url, config, query);
+            return fetchCsData(url, config, query = {
+              sync_token: response.sync_token
+            });
           case 10:
             result = _context8.sent;
             console.log('testing....', result);
