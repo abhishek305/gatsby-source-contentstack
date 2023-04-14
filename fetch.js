@@ -10,6 +10,7 @@
 */
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var preferDefault = function preferDefault(m) {
   return m && m["default"] || m;
@@ -312,7 +313,7 @@ var getSyncData = /*#__PURE__*/function () {
   var _ref8 = (0, _asyncToGenerator2["default"])(function (url, config, query, responseKey) {
     var aggregatedResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
     return /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
-      var response, result;
+      var response, _aggregatedResponse$d, result;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
@@ -353,12 +354,11 @@ var getSyncData = /*#__PURE__*/function () {
             console.log('testing....', result);
             console.log('ROCK,,,,,,', response, aggregatedResponse);
             // const newCheck = result.items;
-            aggregatedResponse.data = response[responseKey].concat(result[responseKey]);
+            aggregatedResponse = (_aggregatedResponse$d = aggregatedResponse.data).concat.apply(_aggregatedResponse$d, (0, _toConsumableArray2["default"])(result.items));
             aggregatedResponse.sync_token = result.sync_token;
           case 14:
-            console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 16:
+          case 15:
           case "end":
             return _context8.stop();
         }
