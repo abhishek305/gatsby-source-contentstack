@@ -261,7 +261,8 @@ const getSyncData = async (
       (query = { sync_token: response.sync_token })
     );
     console.log('testing....', result);
-    aggregatedResponse.data = result[responseKey];
+    const newCheck = result.items;
+    aggregatedResponse.data = response[responseKey].concat(result[responseKey]);
     aggregatedResponse.sync_token = result.sync_token;
   }
 
