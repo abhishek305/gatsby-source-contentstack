@@ -259,26 +259,30 @@ var fetchCsData = /*#__PURE__*/function () {
           console.log('fine............', data);
 
           // Check if items array is empty
-          if (!(data.items.length === 0)) {
+          if (!(data.items.length === 0 && data.pagination_token)) {
             _context6.next = 12;
             break;
           }
           return _context6.abrupt("return", data);
         case 12:
-          // Make subsequent sync call with sync token
+          if (!data.sync_token) {
+            _context6.next = 21;
+            break;
+          }
           syncToken = data.sync_token;
           syncApiUrl = "".concat(config.cdn, "/sync?sync_token=").concat(syncToken);
-          _context6.next = 16;
+          _context6.next = 17;
           return getData(syncApiUrl, option);
-        case 16:
+        case 17:
           syncData = _context6.sent;
           console.log('subsequent sync data............', syncData);
 
           // Merge subsequent sync data with initial data
           data.items = [].concat((0, _toConsumableArray2["default"])(data.items), (0, _toConsumableArray2["default"])(syncData.items));
           data.sync_token = syncData.sync_token;
-          return _context6.abrupt("return", data);
         case 21:
+          return _context6.abrupt("return", data);
+        case 22:
         case "end":
           return _context6.stop();
       }
