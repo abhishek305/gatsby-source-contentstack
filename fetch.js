@@ -313,7 +313,7 @@ var getSyncData = /*#__PURE__*/function () {
   var _ref8 = (0, _asyncToGenerator2["default"])(function (url, config, query, responseKey) {
     var aggregatedResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
     return /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
-      var response;
+      var response, result;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
@@ -341,17 +341,18 @@ var getSyncData = /*#__PURE__*/function () {
             }, responseKey, aggregatedResponse));
           case 7:
             if (!response.sync_token) {
-              _context8.next = 10;
+              _context8.next = 12;
               break;
             }
             _context8.next = 10;
-            return getSyncData(url, config, query = {
-              sync_token: response.sync_token
-            }, responseKey, aggregatedResponse);
+            return fetchCsData(url, config, query);
           case 10:
+            result = _context8.sent;
+            console.log('testing....', result);
+          case 12:
             console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 12:
+          case 14:
           case "end":
             return _context8.stop();
         }
