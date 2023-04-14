@@ -254,15 +254,18 @@ const getSyncData = async (
   }
 
   if (response.sync_token) {
-    return getSyncData(
+    const result = await getSyncData(
       url,
       config,
       (query = { sync_token: response.sync_token }),
       responseKey,
       aggregatedResponse
     );
+    if (result.items.length === 0) {
+      return aggregatedResponse; // Return aggregatedResponse when items.length is zero
+    }
   }
-  
+
   console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
