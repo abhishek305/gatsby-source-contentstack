@@ -333,31 +333,21 @@ var getSyncData = /*#__PURE__*/function () {
               aggregatedResponse.sync_token = response.sync_token ? response.sync_token : aggregatedResponse.sync_token;
             }
             if (!response.pagination_token) {
-              _context8.next = 7;
+              _context8.next = 9;
               break;
             }
             return _context8.abrupt("return", getSyncData(url, config, query = {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
-          case 7:
-            if (!response.sync_token) {
-              _context8.next = 10;
-              break;
-            }
-            _context8.next = 10;
+          case 9:
+            _context8.next = 11;
             return getSyncData(url, config, query = {
               sync_token: response.sync_token
             }, responseKey, aggregatedResponse);
-          case 10:
-            if (!(response.items.length === 0)) {
-              _context8.next = 12;
-              break;
-            }
-            return _context8.abrupt("return", aggregatedResponse);
-          case 12:
+          case 11:
             console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 14:
+          case 13:
           case "end":
             return _context8.stop();
         }

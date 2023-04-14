@@ -252,9 +252,7 @@ const getSyncData = async (
       responseKey,
       aggregatedResponse
     );
-  }
-
-  if (response.sync_token) {
+  } else {
     await getSyncData(
       url,
       config,
@@ -262,9 +260,6 @@ const getSyncData = async (
       responseKey,
       aggregatedResponse
     );
-  }
-  if (response.items.length === 0) {
-    return aggregatedResponse;
   }
 
   console.log('Aggre....inside sync', aggregatedResponse);
