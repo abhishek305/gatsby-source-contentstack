@@ -313,7 +313,7 @@ var getSyncData = /*#__PURE__*/function () {
   var _ref8 = (0, _asyncToGenerator2["default"])(function (url, config, query, responseKey) {
     var aggregatedResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
     return /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
-      var response, result;
+      var response;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
@@ -333,38 +333,31 @@ var getSyncData = /*#__PURE__*/function () {
               aggregatedResponse.sync_token = response.sync_token ? response.sync_token : aggregatedResponse.sync_token;
             }
             if (!response.pagination_token) {
-              _context8.next = 9;
+              _context8.next = 7;
               break;
             }
-            if (query.hasOwnProperty('pagination_token')) {
-              _context8.next = 8;
-              break;
-            }
-            return _context8.abrupt("return", aggregatedResponse);
-          case 8:
             return _context8.abrupt("return", getSyncData(url, config, query = {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
-          case 9:
+          case 7:
             if (!response.sync_token) {
-              _context8.next = 15;
+              _context8.next = 10;
               break;
             }
-            _context8.next = 12;
+            _context8.next = 10;
             return getSyncData(url, config, query = {
               sync_token: response.sync_token
             }, responseKey, aggregatedResponse);
-          case 12:
-            result = _context8.sent;
-            if (!(result.items.length === 0)) {
-              _context8.next = 15;
+          case 10:
+            if (!(response.items.length === 0)) {
+              _context8.next = 12;
               break;
             }
             return _context8.abrupt("return", aggregatedResponse);
-          case 15:
+          case 12:
             console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 17:
+          case 14:
           case "end":
             return _context8.stop();
         }

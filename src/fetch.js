@@ -243,12 +243,8 @@ const getSyncData = async (
       ? response.sync_token
       : aggregatedResponse.sync_token;
   }
-  
+
   if (response.pagination_token) {
-    // Break the loop when pagination_token is not present
-    if (!query.hasOwnProperty('pagination_token')) {
-      return aggregatedResponse;
-    }
     return getSyncData(
       url,
       config,
@@ -259,19 +255,18 @@ const getSyncData = async (
   }
 
   if (response.sync_token) {
-    const result = await getSyncData(
+    await getSyncData(
       url,
       config,
       (query = { sync_token: response.sync_token }),
       responseKey,
       aggregatedResponse
     );
-    if (result.items.length === 0) {
-      return aggregatedResponse; // Return aggregatedResponse when items.length is zero
-    }
+  }
+  if (response.items.length === 0) {
+    return aggregatedResponse;
   }
 
   console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
-
