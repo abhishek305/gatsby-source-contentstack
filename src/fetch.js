@@ -181,6 +181,7 @@ const fetchCsData = async (url, config, query) => {
     },
   };
   const data = await getData(apiUrl, option);
+  console.log('fine............', data);
   return data;
 };
 

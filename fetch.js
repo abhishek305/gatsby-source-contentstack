@@ -255,8 +255,9 @@ var fetchCsData = /*#__PURE__*/function () {
           return getData(apiUrl, option);
         case 8:
           data = _context6.sent;
+          console.log('fine............', data);
           return _context6.abrupt("return", data);
-        case 10:
+        case 11:
         case "end":
           return _context6.stop();
       }
