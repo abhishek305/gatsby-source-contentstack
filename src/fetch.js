@@ -260,12 +260,12 @@ const getSyncData = async (
       config,
       (query = { sync_token: response.sync_token })
     );
-    console.log('testing....', result);
+    // console.log('testing....', result);
     // const newCheck = result.items;
     aggregatedResponse.data = response[responseKey].concat(result[responseKey]);
     aggregatedResponse.sync_token = result.sync_token;
   }
 
-  console.log('Aggre....inside sync', aggregatedResponse);
+  // console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
