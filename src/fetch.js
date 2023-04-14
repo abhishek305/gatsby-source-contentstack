@@ -166,6 +166,10 @@ const getData = async (url, options) => {
   });
 };
 
+const subSequentCheck = syncToken => {
+  const syncApiUrl = `${config.cdn}/sync?sync_token=${syncToken}`;
+};
+
 const fetchCsData = async (url, config, query) => {
   query = query || {};
   query.include_count = true;
@@ -180,11 +184,11 @@ const fetchCsData = async (url, config, query) => {
       branch: config?.branch ? config.branch : 'main',
     },
   };
-  const data = await getData(apiUrl, option);
+  let data = await getData(apiUrl, option);
   console.log('fine............', data);
 
   // Check if items array is empty
-  if (data.items.length === 0 && data.pagination_token) {
+  if (data.pagination_token) {
     return data; // Return the initial data
   }
 
@@ -192,14 +196,9 @@ const fetchCsData = async (url, config, query) => {
   if (data.sync_token) {
     const syncToken = data.sync_token;
     const syncApiUrl = `${config.cdn}/sync?sync_token=${syncToken}`;
-    const syncData = await getData(syncApiUrl, option);
+    data = await getData(syncApiUrl, option);
     console.log('subsequent sync data............', syncData);
-
-    // Merge subsequent sync data with initial data
-    data.items = [...data.items, ...syncData.items];
-    data.sync_token = syncData.sync_token;
   }
-
   return data;
 };
 

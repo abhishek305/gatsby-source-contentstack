@@ -10,7 +10,6 @@
 */
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var preferDefault = function preferDefault(m) {
   return m && m["default"] || m;
@@ -54,7 +53,7 @@ var activity;
 var globalConfig;
 exports.fetchData = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(configOptions, reporter, cache, contentTypeOption) {
-    var syncData, entryService, _syncData, contentstackData;
+    var _syncData2, entryService, _syncData, contentstackData;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -62,15 +61,15 @@ exports.fetchData = /*#__PURE__*/function () {
           activity.start();
           activity.setStatus('Starting to fetch data from Contentstack');
           _context.prev = 3;
-          syncData = {};
+          _syncData2 = {};
           entryService = new OPTIONS_ENTRIES_CLASS_MAPPING[contentTypeOption]();
           _context.next = 8;
           return entryService.fetchSyncData(configOptions, cache, fetchSyncData);
         case 8:
           _syncData = _context.sent;
-          syncData.data = _syncData.data;
+          _syncData2.data = _syncData.data;
           contentstackData = {
-            syncData: syncData.data
+            syncData: _syncData2.data
           };
           activity.end();
           return _context.abrupt("return", {
@@ -233,9 +232,12 @@ var getData = /*#__PURE__*/function () {
     return _ref4.apply(this, arguments);
   };
 }();
+var subSequentCheck = function subSequentCheck(syncToken) {
+  var syncApiUrl = "".concat(config.cdn, "/sync?sync_token=").concat(syncToken);
+};
 var fetchCsData = /*#__PURE__*/function () {
   var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(url, config, query) {
-    var queryParams, apiUrl, option, data, syncToken, syncApiUrl, syncData;
+    var queryParams, apiUrl, option, data, syncToken, syncApiUrl;
     return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
@@ -259,14 +261,14 @@ var fetchCsData = /*#__PURE__*/function () {
           console.log('fine............', data);
 
           // Check if items array is empty
-          if (!(data.items.length === 0 && data.pagination_token)) {
+          if (!data.pagination_token) {
             _context6.next = 12;
             break;
           }
           return _context6.abrupt("return", data);
         case 12:
           if (!data.sync_token) {
-            _context6.next = 21;
+            _context6.next = 19;
             break;
           }
           syncToken = data.sync_token;
@@ -274,15 +276,11 @@ var fetchCsData = /*#__PURE__*/function () {
           _context6.next = 17;
           return getData(syncApiUrl, option);
         case 17:
-          syncData = _context6.sent;
+          data = _context6.sent;
           console.log('subsequent sync data............', syncData);
-
-          // Merge subsequent sync data with initial data
-          data.items = [].concat((0, _toConsumableArray2["default"])(data.items), (0, _toConsumableArray2["default"])(syncData.items));
-          data.sync_token = syncData.sync_token;
-        case 21:
+        case 19:
           return _context6.abrupt("return", data);
-        case 22:
+        case 20:
         case "end":
           return _context6.stop();
       }
