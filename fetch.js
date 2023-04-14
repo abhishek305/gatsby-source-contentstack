@@ -351,7 +351,7 @@ var getSyncData = /*#__PURE__*/function () {
           case 9:
             result = _context8.sent;
             console.log('testing....', result);
-            console.log('ROCK,,,,,,', response, response[responseKey]);
+            console.log('ROCK,,,,,,', response, aggregatedResponse);
             // const newCheck = result.items;
             aggregatedResponse.data = response[responseKey].concat(result[responseKey]);
             aggregatedResponse.sync_token = result.sync_token;
