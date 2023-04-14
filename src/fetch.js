@@ -243,7 +243,12 @@ const getSyncData = async (
       ? response.sync_token
       : aggregatedResponse.sync_token;
   }
+  
   if (response.pagination_token) {
+    // Break the loop when pagination_token is not present
+    if (!query.hasOwnProperty('pagination_token')) {
+      return aggregatedResponse;
+    }
     return getSyncData(
       url,
       config,
@@ -269,3 +274,4 @@ const getSyncData = async (
   console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
+
