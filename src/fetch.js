@@ -262,7 +262,7 @@ const getSyncData = async (
     );
     // console.log('testing....', result);
     // const newCheck = result.items;
-    aggregatedResponse.data = aggregatedResponse.concat(result[responseKey]);
+    aggregatedResponse = aggregatedResponse.data.concat(result[responseKey]);
     aggregatedResponse.sync_token = result.sync_token;
   }
 

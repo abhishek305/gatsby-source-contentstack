@@ -352,7 +352,7 @@ var getSyncData = /*#__PURE__*/function () {
             result = _context8.sent;
             // console.log('testing....', result);
             // const newCheck = result.items;
-            aggregatedResponse.data = aggregatedResponse.concat(result[responseKey]);
+            aggregatedResponse = aggregatedResponse.data.concat(result[responseKey]);
             aggregatedResponse.sync_token = result.sync_token;
           case 12:
             return _context8.abrupt("return", aggregatedResponse);
