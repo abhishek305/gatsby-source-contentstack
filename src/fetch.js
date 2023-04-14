@@ -197,7 +197,7 @@ const getPagedData = async (
   query.limit = limit;
   query.include_global_field_schema = true;
   const response = await fetchCsData(url, config, query);
-  console.log('Paged.....', response);
+  // console.log('Paged.....', response);
   if (!aggregatedResponse) {
     aggregatedResponse = response[responseKey];
   } else {
@@ -214,7 +214,7 @@ const getPagedData = async (
       aggregatedResponse
     );
   }
-  console.log('Aggre....inside page', aggregatedResponse);
+  // console.log('Aggre....inside page', aggregatedResponse);
 
   return aggregatedResponse;
 };
@@ -227,7 +227,7 @@ const getSyncData = async (
   aggregatedResponse = null
 ) => {
   const response = await fetchCsData(url, config, query);
-  console.log('Synced.....', response);
+  // console.log('Synced.....', response);
 
   if (!aggregatedResponse) {
     aggregatedResponse = {};
@@ -261,7 +261,7 @@ const getSyncData = async (
       (query = { sync_token: response.sync_token })
     );
     console.log('testing....', result);
-    const newCheck = result.items;
+    // const newCheck = result.items;
     aggregatedResponse.data = response[responseKey].concat(result[responseKey]);
     aggregatedResponse.sync_token = result.sync_token;
   }
