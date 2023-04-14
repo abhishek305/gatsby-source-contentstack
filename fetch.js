@@ -340,9 +340,17 @@ var getSyncData = /*#__PURE__*/function () {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
           case 7:
+            if (!response.sync_token) {
+              _context8.next = 9;
+              break;
+            }
+            return _context8.abrupt("return", getSyncData(url, config, query = {
+              sync_token: response.sync_token
+            }, responseKey, aggregatedResponse));
+          case 9:
             console.log('Aggre....inside sync', aggregatedResponse);
             return _context8.abrupt("return", aggregatedResponse);
-          case 9:
+          case 11:
           case "end":
             return _context8.stop();
         }

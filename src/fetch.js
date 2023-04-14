@@ -252,6 +252,17 @@ const getSyncData = async (
       aggregatedResponse
     );
   }
+
+  if (response.sync_token) {
+    return getSyncData(
+      url,
+      config,
+      (query = { sync_token: response.sync_token }),
+      responseKey,
+      aggregatedResponse
+    );
+  }
+  
   console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
