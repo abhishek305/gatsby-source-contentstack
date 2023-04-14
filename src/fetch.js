@@ -182,8 +182,25 @@ const fetchCsData = async (url, config, query) => {
   };
   const data = await getData(apiUrl, option);
   console.log('fine............', data);
+
+  // Check if items array is empty
+  if (data.items.length === 0) {
+    return data; // Return the initial data
+  }
+
+  // Make subsequent sync call with sync token
+  const syncToken = data.sync_token;
+  const syncApiUrl = `${config.cdn}/sync?sync_token=${syncToken}`;
+  const syncData = await getData(syncApiUrl, option);
+  console.log('subsequent sync data............', syncData);
+
+  // Merge subsequent sync data with initial data
+  data.items = [...data.items, ...syncData.items];
+  data.sync_token = syncData.sync_token;
+
   return data;
 };
+
 
 const getPagedData = async (
   url,

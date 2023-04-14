@@ -10,6 +10,7 @@
 */
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var preferDefault = function preferDefault(m) {
   return m && m["default"] || m;
@@ -234,7 +235,7 @@ var getData = /*#__PURE__*/function () {
 }();
 var fetchCsData = /*#__PURE__*/function () {
   var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(url, config, query) {
-    var queryParams, apiUrl, option, data;
+    var queryParams, apiUrl, option, data, syncToken, syncApiUrl, syncData;
     return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
@@ -256,8 +257,28 @@ var fetchCsData = /*#__PURE__*/function () {
         case 8:
           data = _context6.sent;
           console.log('fine............', data);
+
+          // Check if items array is empty
+          if (!(data.items.length === 0)) {
+            _context6.next = 12;
+            break;
+          }
           return _context6.abrupt("return", data);
-        case 11:
+        case 12:
+          // Make subsequent sync call with sync token
+          syncToken = data.sync_token;
+          syncApiUrl = "".concat(config.cdn, "/sync?sync_token=").concat(syncToken);
+          _context6.next = 16;
+          return getData(syncApiUrl, option);
+        case 16:
+          syncData = _context6.sent;
+          console.log('subsequent sync data............', syncData);
+
+          // Merge subsequent sync data with initial data
+          data.items = [].concat((0, _toConsumableArray2["default"])(data.items), (0, _toConsumableArray2["default"])(syncData.items));
+          data.sync_token = syncData.sync_token;
+          return _context6.abrupt("return", data);
+        case 21:
         case "end":
           return _context6.stop();
       }
