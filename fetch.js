@@ -53,7 +53,7 @@ var activity;
 var globalConfig;
 exports.fetchData = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(configOptions, reporter, cache, contentTypeOption) {
-    var _syncData2, entryService, _syncData, contentstackData;
+    var syncData, entryService, _syncData, contentstackData;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -61,15 +61,15 @@ exports.fetchData = /*#__PURE__*/function () {
           activity.start();
           activity.setStatus('Starting to fetch data from Contentstack');
           _context.prev = 3;
-          _syncData2 = {};
+          syncData = {};
           entryService = new OPTIONS_ENTRIES_CLASS_MAPPING[contentTypeOption]();
           _context.next = 8;
           return entryService.fetchSyncData(configOptions, cache, fetchSyncData);
         case 8:
           _syncData = _context.sent;
-          _syncData2.data = _syncData.data;
+          syncData.data = _syncData.data;
           contentstackData = {
-            syncData: _syncData2.data
+            syncData: syncData.data
           };
           activity.end();
           return _context.abrupt("return", {
@@ -232,12 +232,9 @@ var getData = /*#__PURE__*/function () {
     return _ref4.apply(this, arguments);
   };
 }();
-var subSequentCheck = function subSequentCheck(syncToken) {
-  var syncApiUrl = "".concat(config.cdn, "/sync?sync_token=").concat(syncToken);
-};
 var fetchCsData = /*#__PURE__*/function () {
   var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(url, config, query) {
-    var queryParams, apiUrl, option, data, syncToken, syncApiUrl;
+    var queryParams, apiUrl, option, data;
     return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
@@ -258,29 +255,8 @@ var fetchCsData = /*#__PURE__*/function () {
           return getData(apiUrl, option);
         case 8:
           data = _context6.sent;
-          console.log('fine............', data);
-
-          // Check if items array is empty
-          if (!data.pagination_token) {
-            _context6.next = 12;
-            break;
-          }
           return _context6.abrupt("return", data);
-        case 12:
-          if (!data.sync_token) {
-            _context6.next = 19;
-            break;
-          }
-          syncToken = data.sync_token;
-          syncApiUrl = "".concat(config.cdn, "/sync?sync_token=").concat(syncToken);
-          _context6.next = 17;
-          return getData(syncApiUrl, option);
-        case 17:
-          data = _context6.sent;
-          console.log('subsequent sync data............', syncData);
-        case 19:
-          return _context6.abrupt("return", data);
-        case 20:
+        case 10:
         case "end":
           return _context6.stop();
       }
@@ -308,19 +284,21 @@ var getPagedData = /*#__PURE__*/function () {
             return fetchCsData(url, config, query);
           case 5:
             response = _context7.sent;
+            console.log('Paged.....', response);
             if (!aggregatedResponse) {
               aggregatedResponse = response[responseKey];
             } else {
               aggregatedResponse = aggregatedResponse.concat(response[responseKey]);
             }
             if (!(skip + limit <= response.count)) {
-              _context7.next = 9;
+              _context7.next = 10;
               break;
             }
             return _context7.abrupt("return", getPagedData(url, config, responseKey, query = {}, skip + limit, limit, aggregatedResponse));
-          case 9:
-            return _context7.abrupt("return", aggregatedResponse);
           case 10:
+            console.log('Aggre....inside page', aggregatedResponse);
+            return _context7.abrupt("return", aggregatedResponse);
+          case 12:
           case "end":
             return _context7.stop();
         }
@@ -343,6 +321,7 @@ var getSyncData = /*#__PURE__*/function () {
             return fetchCsData(url, config, query);
           case 2:
             response = _context8.sent;
+            console.log('Synced.....', response);
             if (!aggregatedResponse) {
               aggregatedResponse = {};
               aggregatedResponse.data = [];
@@ -354,15 +333,16 @@ var getSyncData = /*#__PURE__*/function () {
               aggregatedResponse.sync_token = response.sync_token ? response.sync_token : aggregatedResponse.sync_token;
             }
             if (!response.pagination_token) {
-              _context8.next = 6;
+              _context8.next = 7;
               break;
             }
             return _context8.abrupt("return", getSyncData(url, config, query = {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
-          case 6:
-            return _context8.abrupt("return", aggregatedResponse);
           case 7:
+            console.log('Aggre....inside sync', aggregatedResponse);
+            return _context8.abrupt("return", aggregatedResponse);
+          case 9:
           case "end":
             return _context8.stop();
         }

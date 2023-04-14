@@ -166,10 +166,6 @@ const getData = async (url, options) => {
   });
 };
 
-const subSequentCheck = syncToken => {
-  const syncApiUrl = `${config.cdn}/sync?sync_token=${syncToken}`;
-};
-
 const fetchCsData = async (url, config, query) => {
   query = query || {};
   query.include_count = true;
@@ -184,21 +180,7 @@ const fetchCsData = async (url, config, query) => {
       branch: config?.branch ? config.branch : 'main',
     },
   };
-  let data = await getData(apiUrl, option);
-  console.log('fine............', data);
-
-  // Check if items array is empty
-  if (data.pagination_token) {
-    return data; // Return the initial data
-  }
-
-  // Check for sync_token
-  if (data.sync_token) {
-    const syncToken = data.sync_token;
-    const syncApiUrl = `${config.cdn}/sync?sync_token=${syncToken}`;
-    data = await getData(syncApiUrl, option);
-    console.log('subsequent sync data............', syncData);
-  }
+  const data = await getData(apiUrl, option);
   return data;
 };
 
@@ -215,6 +197,7 @@ const getPagedData = async (
   query.limit = limit;
   query.include_global_field_schema = true;
   const response = await fetchCsData(url, config, query);
+  console.log('Paged.....', response);
   if (!aggregatedResponse) {
     aggregatedResponse = response[responseKey];
   } else {
@@ -231,6 +214,8 @@ const getPagedData = async (
       aggregatedResponse
     );
   }
+  console.log('Aggre....inside page', aggregatedResponse);
+
   return aggregatedResponse;
 };
 
@@ -242,6 +227,8 @@ const getSyncData = async (
   aggregatedResponse = null
 ) => {
   const response = await fetchCsData(url, config, query);
+  console.log('Synced.....', response);
+
   if (!aggregatedResponse) {
     aggregatedResponse = {};
     aggregatedResponse.data = [];
@@ -265,5 +252,6 @@ const getSyncData = async (
       aggregatedResponse
     );
   }
+  console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
