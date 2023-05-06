@@ -256,10 +256,10 @@ var fetchCsData = /*#__PURE__*/function () {
           return getData(apiUrl, option);
         case 8:
           data = _context6.sent;
-          console.log('Inside fetchCsData....', data);
+          // console.log('Inside fetchCsData....', data);
           console.log('type sync..', data === null || data === void 0 ? void 0 : data.sync_token);
           return _context6.abrupt("return", data);
-        case 12:
+        case 11:
         case "end":
           return _context6.stop();
       }

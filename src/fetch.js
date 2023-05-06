@@ -182,7 +182,7 @@ const fetchCsData = async (url, config, query) => {
     },
   };
   const data = await getData(apiUrl, option);
-  console.log('Inside fetchCsData....', data);
+  // console.log('Inside fetchCsData....', data);
   console.log('type sync..', data?.sync_token);
   return data;
 };
