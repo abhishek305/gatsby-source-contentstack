@@ -262,17 +262,20 @@ const getSyncData = async (
   }
 
   if (response.sync_token) {
-    // console.log('both tokens...', syncToken);
     const tempToken = syncToken.filter(item => item !== undefined);
     console.log('both tokens...', tempToken);
-    const result = await fetchCsData(
-      url,
-      config,
-      (query = { sync_token: response.sync_token })
-    );
+    for (const token of tempToken) {
+      const result = await fetchCsData(
+        url,
+        config,
+        (query = { sync_token: token })
+      );
 
-    aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
-    aggregatedResponse.sync_token = result.sync_token;
+      aggregatedResponse.data = aggregatedResponse.data?.concat(
+        ...result.items
+      );
+      aggregatedResponse.sync_token = result.sync_token;
+    }
   }
 
   return aggregatedResponse;
