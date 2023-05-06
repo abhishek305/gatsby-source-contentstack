@@ -229,7 +229,7 @@ const getSyncData = async (
   const response = await fetchCsData(url, config, query);
   console.log('Synced.....', response);
 
-  if (response.sync_token) {
+  if (response.sync_token && response.items !== 0) {
     return getSyncData(
       url,
       config,

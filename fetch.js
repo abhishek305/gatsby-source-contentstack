@@ -322,7 +322,7 @@ var getSyncData = /*#__PURE__*/function () {
           case 2:
             response = _context8.sent;
             console.log('Synced.....', response);
-            if (!response.sync_token) {
+            if (!(response.sync_token && response.items !== 0)) {
               _context8.next = 6;
               break;
             }
