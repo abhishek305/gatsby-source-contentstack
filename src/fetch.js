@@ -223,6 +223,8 @@ const getSyncData = async (
   aggregatedResponse = null
 ) => {
   const response = await fetchCsData(url, config, query);
+  console.log('Synced.....', response);
+
   if (!aggregatedResponse) {
     aggregatedResponse = {};
     aggregatedResponse.data = [];
@@ -237,6 +239,7 @@ const getSyncData = async (
       ? response.sync_token
       : aggregatedResponse.sync_token;
   }
+
   if (response.pagination_token) {
     return getSyncData(
       url,
@@ -246,5 +249,20 @@ const getSyncData = async (
       aggregatedResponse
     );
   }
+
+  if (response.sync_token) {
+    const result = await fetchCsData(
+      url,
+      config,
+      (query = { sync_token: response.sync_token })
+    );
+    console.log('testing....', result);
+    console.log('ROCK,,,,,,', response, aggregatedResponse);
+    // const newCheck = result.items;
+    aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
+    aggregatedResponse.sync_token = result.sync_token;
+  }
+
+  // console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
