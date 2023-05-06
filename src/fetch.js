@@ -28,7 +28,6 @@ const {
   FetchSpecifiedLocalesAndContentTypesEntries,
 } = require('./entry-data');
 const { CODES } = require('./utils');
-const { resolveConfig } = require('prettier');
 
 const OPTION_CLASS_MAPPING = {
   '': FetchDefaultContentTypes,
@@ -254,16 +253,12 @@ const getSyncData = async (
     );
   }
 
-  if (response.sync_token && response.items.length !== 0) {
-    if (
-      response.items[0].type === 'asset_published' &&
-      response.items[0].type === 'entry_published'
-    )
-      console.log('aggregate...', aggregatedResponse.sync_token);
+  if (response.sync_token) {
+    console.log('aggregate...', response.sync_token);
     return getSyncData(
       url,
       config,
-      (query = { sync_token: aggregatedResponse.sync_token }),
+      (query = { sync_token: response.sync_token }),
       responseKey,
       aggregatedResponse
     );
