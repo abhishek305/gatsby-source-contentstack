@@ -10,7 +10,6 @@
 */
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var preferDefault = function preferDefault(m) {
   return m && m["default"] || m;
@@ -314,7 +313,7 @@ var getSyncData = /*#__PURE__*/function () {
   var _ref8 = (0, _asyncToGenerator2["default"])(function (url, config, query, responseKey) {
     var aggregatedResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
     return /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
-      var response, _aggregatedResponse$d, result;
+      var response, syncResult;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
@@ -323,6 +322,18 @@ var getSyncData = /*#__PURE__*/function () {
           case 2:
             response = _context8.sent;
             console.log('Synced.....', response);
+            if (!response.sync_token) {
+              _context8.next = 9;
+              break;
+            }
+            _context8.next = 7;
+            return fetchCsData(url, config, query = {
+              sync_token: response.sync_token
+            });
+          case 7:
+            syncResult = _context8.sent;
+            console.log('I got this in Sync...', syncResult);
+          case 9:
             if (!aggregatedResponse) {
               aggregatedResponse = {};
               aggregatedResponse.data = [];
@@ -334,28 +345,15 @@ var getSyncData = /*#__PURE__*/function () {
               aggregatedResponse.sync_token = response.sync_token ? response.sync_token : aggregatedResponse.sync_token;
             }
             if (!response.pagination_token) {
-              _context8.next = 7;
+              _context8.next = 12;
               break;
             }
             return _context8.abrupt("return", getSyncData(url, config, query = {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
-          case 7:
-            if (!response.sync_token) {
-              _context8.next = 13;
-              break;
-            }
-            _context8.next = 10;
-            return fetchCsData(url, config, query = {
-              sync_token: response.sync_token
-            });
-          case 10:
-            result = _context8.sent;
-            aggregatedResponse.data = (_aggregatedResponse$d = aggregatedResponse.data) === null || _aggregatedResponse$d === void 0 ? void 0 : _aggregatedResponse$d.concat.apply(_aggregatedResponse$d, (0, _toConsumableArray2["default"])(result.items));
-            aggregatedResponse.sync_token = result.sync_token;
-          case 13:
+          case 12:
             return _context8.abrupt("return", aggregatedResponse);
-          case 14:
+          case 13:
           case "end":
             return _context8.stop();
         }

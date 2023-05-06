@@ -229,6 +229,15 @@ const getSyncData = async (
   const response = await fetchCsData(url, config, query);
   console.log('Synced.....', response);
 
+  if (response.sync_token) {
+    const syncResult = await fetchCsData(
+      url,
+      config,
+      (query = { sync_token: response.sync_token })
+    );
+    console.log('I got this in Sync...', syncResult);
+  }
+
   if (!aggregatedResponse) {
     aggregatedResponse = {};
     aggregatedResponse.data = [];
@@ -254,16 +263,16 @@ const getSyncData = async (
     );
   }
 
-  if (response.sync_token) {
-    const result = await fetchCsData(
-      url,
-      config,
-      (query = { sync_token: response.sync_token })
-    );
+  // if (response.sync_token) {
+  //   const result = await fetchCsData(
+  //     url,
+  //     config,
+  //     (query = { sync_token: response.sync_token })
+  //   );
 
-    aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
-    aggregatedResponse.sync_token = result.sync_token;
-  }
+  //   aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
+  //   aggregatedResponse.sync_token = result.sync_token;
+  // }
 
   return aggregatedResponse;
 };
