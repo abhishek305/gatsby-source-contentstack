@@ -257,12 +257,9 @@ const getSyncData = async (
       (query = { sync_token: response.sync_token })
     );
     console.log('testing....', result);
-    console.log('ROCK,,,,,,', response, aggregatedResponse);
-    // const newCheck = result.items;
     aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
     aggregatedResponse.sync_token = result.sync_token;
   }
 
-  // console.log('Aggre....inside sync', aggregatedResponse);
   return aggregatedResponse;
 };
