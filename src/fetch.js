@@ -229,14 +229,12 @@ const getSyncData = async (
   const response = await fetchCsData(url, config, query);
   console.log('Synced.....', response);
 
-  if (response.sync_token && response.items !== 0) {
-    return getSyncData(
-      url,
-      config,
-      (query = { sync_token: response.sync_token }),
-      responseKey,
-      aggregatedResponse
-    );
+  if (
+    response.items.some(item =>
+      ['entry_published', 'asset_published'].includes(item.type)
+    )
+  ) {
+    syncToken.push(response.sync_token);
   }
 
   if (!aggregatedResponse) {
@@ -264,16 +262,17 @@ const getSyncData = async (
     );
   }
 
-  // if (response.sync_token) {
-  //   const result = await fetchCsData(
-  //     url,
-  //     config,
-  //     (query = { sync_token: response.sync_token })
-  //   );
+  if (response.sync_token) {
+    console.log('both tokens...', syncToken);
+    const result = await fetchCsData(
+      url,
+      config,
+      (query = { sync_token: response.sync_token })
+    );
 
-  //   aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
-  //   aggregatedResponse.sync_token = result.sync_token;
-  // }
+    aggregatedResponse.data = aggregatedResponse.data?.concat(...result.items);
+    aggregatedResponse.sync_token = result.sync_token;
+  }
 
   return aggregatedResponse;
 };
