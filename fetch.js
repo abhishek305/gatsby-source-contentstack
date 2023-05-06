@@ -320,7 +320,8 @@ var getSyncData = /*#__PURE__*/function () {
           case 2:
             response = _context8.sent;
             console.log('Synced.....', response, response.sync_token);
-            console.log('agregated', aggregatedResponse.sync_token);
+            // console.log('agregated', aggregatedResponse.sync_token);
+
             if (!aggregatedResponse) {
               aggregatedResponse = {};
               aggregatedResponse.data = [];
@@ -332,24 +333,24 @@ var getSyncData = /*#__PURE__*/function () {
               aggregatedResponse.sync_token = response.sync_token ? response.sync_token : aggregatedResponse.sync_token;
             }
             if (!response.pagination_token) {
-              _context8.next = 8;
+              _context8.next = 7;
               break;
             }
             return _context8.abrupt("return", getSyncData(url, config, query = {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
-          case 8:
+          case 7:
             if (!(response.items.length !== 0 && aggregatedResponse.sync_token)) {
-              _context8.next = 11;
+              _context8.next = 10;
               break;
             }
             console.log('aggregate...', aggregatedResponse.sync_token);
             return _context8.abrupt("return", getSyncData(url, config, query = {
               sync_token: aggregatedResponse.sync_token
             }, responseKey, aggregatedResponse));
-          case 11:
+          case 10:
             return _context8.abrupt("return", aggregatedResponse);
-          case 12:
+          case 11:
           case "end":
             return _context8.stop();
         }

@@ -226,7 +226,7 @@ const getSyncData = async (
 ) => {
   const response = await fetchCsData(url, config, query);
   console.log('Synced.....', response, response.sync_token);
-  console.log('agregated', aggregatedResponse.sync_token);
+  // console.log('agregated', aggregatedResponse.sync_token);
 
   if (!aggregatedResponse) {
     aggregatedResponse = {};
