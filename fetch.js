@@ -33,6 +33,8 @@ var _require3 = require('./entry-data'),
   FetchSpecifiedLocalesAndContentTypesEntries = _require3.FetchSpecifiedLocalesAndContentTypesEntries;
 var _require4 = require('./utils'),
   CODES = _require4.CODES;
+var _require5 = require('prettier'),
+  resolveConfig = _require5.resolveConfig;
 var OPTION_CLASS_MAPPING = {
   '': FetchDefaultContentTypes,
   contentTypes: FetchSpecifiedContentTypes,
@@ -319,7 +321,7 @@ var getSyncData = /*#__PURE__*/function () {
             return fetchCsData(url, config, query);
           case 2:
             response = _context8.sent;
-            console.log('Synced.....', response, response.sync_token);
+            console.log('Synced.....', response.sync_token);
             // console.log('agregated', aggregatedResponse.sync_token);
 
             if (!aggregatedResponse) {
@@ -340,13 +342,13 @@ var getSyncData = /*#__PURE__*/function () {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
           case 7:
-            if (!(response.items.length !== 0 && aggregatedResponse.sync_token)) {
+            if (!(response.sync_token && response.items.length !== 0)) {
               _context8.next = 10;
               break;
             }
-            console.log('aggregate...', aggregatedResponse.sync_token);
+            if (response.items[0].type === 'asset_published' && response.items[0].type === 'entry_published') console.log('aggregate...', aggregatedResponse.sync_token, response.sync_token);
             return _context8.abrupt("return", getSyncData(url, config, query = {
-              sync_token: aggregatedResponse.sync_token
+              sync_token: response.sync_token
             }, responseKey, aggregatedResponse));
           case 10:
             return _context8.abrupt("return", aggregatedResponse);
