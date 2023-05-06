@@ -314,7 +314,7 @@ var getSyncData = /*#__PURE__*/function () {
   var _ref8 = (0, _asyncToGenerator2["default"])(function (url, config, query, responseKey) {
     var aggregatedResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
     return /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
-      var response, _aggregatedResponse$d, result;
+      var response, _aggregatedResponse$d, tempToken, result;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
@@ -348,21 +348,25 @@ var getSyncData = /*#__PURE__*/function () {
             }, responseKey, aggregatedResponse));
           case 9:
             if (!response.sync_token) {
-              _context8.next = 16;
+              _context8.next = 17;
               break;
             }
-            console.log('both tokens...', syncToken);
-            _context8.next = 13;
+            // console.log('both tokens...', syncToken);
+            tempToken = syncToken.filter(function (item) {
+              return item !== undefined;
+            });
+            console.log('both tokens...', tempToken);
+            _context8.next = 14;
             return fetchCsData(url, config, query = {
               sync_token: response.sync_token
             });
-          case 13:
+          case 14:
             result = _context8.sent;
             aggregatedResponse.data = (_aggregatedResponse$d = aggregatedResponse.data) === null || _aggregatedResponse$d === void 0 ? void 0 : _aggregatedResponse$d.concat.apply(_aggregatedResponse$d, (0, _toConsumableArray2["default"])(result.items));
             aggregatedResponse.sync_token = result.sync_token;
-          case 16:
-            return _context8.abrupt("return", aggregatedResponse);
           case 17:
+            return _context8.abrupt("return", aggregatedResponse);
+          case 18:
           case "end":
             return _context8.stop();
         }

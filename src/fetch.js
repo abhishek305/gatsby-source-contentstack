@@ -262,7 +262,9 @@ const getSyncData = async (
   }
 
   if (response.sync_token) {
-    console.log('both tokens...', syncToken);
+    // console.log('both tokens...', syncToken);
+    const tempToken = syncToken.filter(item => item !== undefined);
+    console.log('both tokens...', tempToken);
     const result = await fetchCsData(
       url,
       config,
