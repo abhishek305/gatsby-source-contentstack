@@ -230,18 +230,13 @@ const getSyncData = async (
   console.log('Synced.....', response);
 
   if (response.sync_token) {
-    const syncResult = await fetchCsData(
+    return getSyncData(
       url,
       config,
-      (query = { sync_token: response.sync_token })
+      (query = { sync_token: response.sync_token }),
+      responseKey,
+      aggregatedResponse
     );
-    console.log('I got this in Sync...', syncResult);
-    aggregatedResponse.data = aggregatedResponse.data?.concat(
-      ...syncResult.items
-    );
-    aggregatedResponse.sync_token = syncResult.sync_token
-      ? syncResult.sync_token
-      : aggregatedResponse.sync_token;
   }
 
   if (!aggregatedResponse) {
