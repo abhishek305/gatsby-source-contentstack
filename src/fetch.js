@@ -227,14 +227,6 @@ const getSyncData = async (
   const response = await fetchCsData(url, config, query);
   console.log('Synced.....', response);
 
-  if (
-    response.items.some(item =>
-      ['entry_published', 'asset_published'].includes(item.type)
-    )
-  ) {
-    syncToken.push(response.sync_token);
-  }
-
   if (!aggregatedResponse) {
     aggregatedResponse = {};
     aggregatedResponse.data = [];
@@ -260,8 +252,8 @@ const getSyncData = async (
     );
   }
 
-  if (response.items.length !== 0 && response.sync_token) {
-    console.log(syncToken, 'later..', aggregatedResponse);
+  if (response.items.length !== 0 && aggregatedResponse.sync_token) {
+    console.log('aggregate...', aggregatedResponse.sync_token);
     return getSyncData(
       url,
       config,
