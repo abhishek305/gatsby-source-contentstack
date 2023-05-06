@@ -236,6 +236,12 @@ const getSyncData = async (
       (query = { sync_token: response.sync_token })
     );
     console.log('I got this in Sync...', syncResult);
+    aggregatedResponse.data = aggregatedResponse.data?.concat(
+      ...syncResult.items
+    );
+    aggregatedResponse.sync_token = syncResult.sync_token
+      ? syncResult.sync_token
+      : aggregatedResponse.sync_token;
   }
 
   if (!aggregatedResponse) {
