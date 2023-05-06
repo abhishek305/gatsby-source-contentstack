@@ -323,10 +323,9 @@ var getSyncData = /*#__PURE__*/function () {
           case 2:
             response = _context8.sent;
             console.log('Synced.....', response);
-            if (response.items[0].type === 'asset_published') {
-              syncToken.push(response.sync_token);
-            }
-            if (response.items[0].type === 'entry_published') {
+            if (response.items.some(function (item) {
+              return ['entry_published', 'asset_published'].includes(item.type);
+            })) {
               syncToken.push(response.sync_token);
             }
             if (!aggregatedResponse) {
@@ -340,15 +339,15 @@ var getSyncData = /*#__PURE__*/function () {
               aggregatedResponse.sync_token = response.sync_token ? response.sync_token : aggregatedResponse.sync_token;
             }
             if (!response.pagination_token) {
-              _context8.next = 9;
+              _context8.next = 8;
               break;
             }
             return _context8.abrupt("return", getSyncData(url, config, query = {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
-          case 9:
+          case 8:
             if (!response.sync_token) {
-              _context8.next = 17;
+              _context8.next = 16;
               break;
             }
             // console.log('both tokens...', syncToken);
@@ -356,17 +355,17 @@ var getSyncData = /*#__PURE__*/function () {
               return item !== undefined;
             });
             console.log('both tokens...', tempToken);
-            _context8.next = 14;
+            _context8.next = 13;
             return fetchCsData(url, config, query = {
               sync_token: response.sync_token
             });
-          case 14:
+          case 13:
             result = _context8.sent;
             aggregatedResponse.data = (_aggregatedResponse$d = aggregatedResponse.data) === null || _aggregatedResponse$d === void 0 ? void 0 : _aggregatedResponse$d.concat.apply(_aggregatedResponse$d, (0, _toConsumableArray2["default"])(result.items));
             aggregatedResponse.sync_token = result.sync_token;
-          case 17:
+          case 16:
             return _context8.abrupt("return", aggregatedResponse);
-          case 18:
+          case 17:
           case "end":
             return _context8.stop();
         }

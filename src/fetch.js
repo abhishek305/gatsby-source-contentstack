@@ -229,13 +229,13 @@ const getSyncData = async (
   const response = await fetchCsData(url, config, query);
   console.log('Synced.....', response);
 
-  if (response.items[0].type === 'asset_published') {
+  if (
+    response.items.some(item =>
+      ['entry_published', 'asset_published'].includes(item.type)
+    )
+  ) {
     syncToken.push(response.sync_token);
   }
-  if (response.items[0].type === 'entry_published') {
-    syncToken.push(response.sync_token);
-  }
-
   if (!aggregatedResponse) {
     aggregatedResponse = {};
     aggregatedResponse.data = [];
