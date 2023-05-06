@@ -347,9 +347,9 @@ var getSyncData = /*#__PURE__*/function () {
               _context8.next = 11;
               break;
             }
-            console.log(syncToken, 'later..');
+            console.log(syncToken, 'later..', aggregatedResponse);
             return _context8.abrupt("return", getSyncData(url, config, query = {
-              sync_token: syncToken[0]
+              sync_token: aggregatedResponse.sync_token
             }, responseKey, aggregatedResponse));
           case 11:
             return _context8.abrupt("return", aggregatedResponse);

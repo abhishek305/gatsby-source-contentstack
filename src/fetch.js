@@ -261,11 +261,11 @@ const getSyncData = async (
   }
 
   if (response.items.length !== 0 && response.sync_token) {
-    console.log(syncToken, 'later..');
+    console.log(syncToken, 'later..', aggregatedResponse);
     return getSyncData(
       url,
       config,
-      (query = { sync_token: syncToken[0] }),
+      (query = { sync_token: aggregatedResponse.sync_token }),
       responseKey,
       aggregatedResponse
     );
