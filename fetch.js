@@ -361,9 +361,9 @@ var getSyncData = /*#__PURE__*/function () {
               break;
             }
             token = _step.value;
-            return _context8.abrupt("return", getSyncData(url, config, (query = {
+            return _context8.abrupt("return", getSyncData(url, config, query = {
               sync_token: token
-            }, responseKey, aggregatedResponse)));
+            }, responseKey, aggregatedResponse));
           case 15:
             _context8.next = 12;
             break;

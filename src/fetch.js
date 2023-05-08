@@ -264,7 +264,9 @@ const getSyncData = async (
       return getSyncData(
         url,
         config,
-        ((query = { sync_token: token }), responseKey, aggregatedResponse)
+        (query = { sync_token: token }),
+        responseKey,
+        aggregatedResponse
       );
       // const syncResponse = await fetchCsData(
       //   url,
