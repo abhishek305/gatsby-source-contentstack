@@ -10,6 +10,7 @@
 */
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -314,7 +315,7 @@ var getSyncData = /*#__PURE__*/function () {
   var _ref8 = (0, _asyncToGenerator2["default"])(function (url, config, query, responseKey) {
     var aggregatedResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
     return /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
-      var response, aggregatedSyncToken, _iterator, _step, token;
+      var response, aggregatedSyncToken, _iterator, _step, _aggregatedResponse$d, _aggregatedResponse$d2, token, syncResponse;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
@@ -345,46 +346,53 @@ var getSyncData = /*#__PURE__*/function () {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
           case 7:
-            if (!(response.sync_token && response.items.length !== 0)) {
-              _context8.next = 25;
+            if (!response.sync_token) {
+              _context8.next = 31;
               break;
             }
             aggregatedSyncToken = syncToken.filter(function (item) {
               return item !== undefined;
             });
+            console.log('aggr.. sync', aggregatedSyncToken);
             _iterator = _createForOfIteratorHelper(aggregatedSyncToken);
-            _context8.prev = 10;
+            _context8.prev = 11;
             _iterator.s();
-          case 12:
+          case 13:
             if ((_step = _iterator.n()).done) {
-              _context8.next = 17;
+              _context8.next = 23;
               break;
             }
             token = _step.value;
-            return _context8.abrupt("return", getSyncData(url, config, query = {
+            _context8.next = 17;
+            return fetchCsData(url, config, query = {
               sync_token: token
-            }, responseKey, aggregatedResponse));
-          case 15:
-            _context8.next = 12;
-            break;
+            });
           case 17:
-            _context8.next = 22;
+            syncResponse = _context8.sent;
+            console.log('Any new data...', syncResponse);
+            aggregatedResponse.data = (_aggregatedResponse$d = aggregatedResponse.data) === null || _aggregatedResponse$d === void 0 ? void 0 : (_aggregatedResponse$d2 = _aggregatedResponse$d).concat.apply(_aggregatedResponse$d2, (0, _toConsumableArray2["default"])(syncResponse.items));
+            aggregatedResponse.sync_token = syncResponse.sync_token;
+          case 21:
+            _context8.next = 13;
             break;
-          case 19:
-            _context8.prev = 19;
-            _context8.t0 = _context8["catch"](10);
-            _iterator.e(_context8.t0);
-          case 22:
-            _context8.prev = 22;
-            _iterator.f();
-            return _context8.finish(22);
+          case 23:
+            _context8.next = 28;
+            break;
           case 25:
+            _context8.prev = 25;
+            _context8.t0 = _context8["catch"](11);
+            _iterator.e(_context8.t0);
+          case 28:
+            _context8.prev = 28;
+            _iterator.f();
+            return _context8.finish(28);
+          case 31:
             return _context8.abrupt("return", aggregatedResponse);
-          case 26:
+          case 32:
           case "end":
             return _context8.stop();
         }
-      }, _callee8, null, [[10, 19, 22, 25]]);
+      }, _callee8, null, [[11, 25, 28, 31]]);
     })();
   });
   return function getSyncData(_x18, _x19, _x20, _x21) {
