@@ -182,8 +182,6 @@ const fetchCsData = async (url, config, query) => {
     },
   };
   const data = await getData(apiUrl, option);
-  // console.log('Inside fetchCsData....', data);
-  console.log('type sync..', data?.sync_token);
   return data;
 };
 
@@ -227,7 +225,6 @@ const getSyncData = async (
   aggregatedResponse = null
 ) => {
   const response = await fetchCsData(url, config, query);
-  console.log('Synced.....', response);
 
   if (
     response.items.some(item =>
@@ -262,19 +259,20 @@ const getSyncData = async (
   }
 
   if (response.sync_token) {
-    const tempToken = syncToken.filter(item => item !== undefined);
-    console.log('both tokens...', tempToken);
-    for (const token of tempToken) {
-      const result = await fetchCsData(
+    const aggregatedSyncToken = syncToken.filter(item => item !== undefined);
+    for (const token of aggregatedSyncToken) {
+      const syncResponse = await fetchCsData(
         url,
         config,
         (query = { sync_token: token })
       );
 
       aggregatedResponse.data = aggregatedResponse.data?.concat(
-        ...result.items
+        ...syncResponse.items
       );
-      aggregatedResponse.sync_token = result.sync_token;
+      aggregatedResponse.sync_token = syncResponse.sync_token
+        ? syncResponse.sync_token
+        : aggregatedResponse.sync_token;
     }
   }
 
