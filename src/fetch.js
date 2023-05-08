@@ -258,7 +258,7 @@ const getSyncData = async (
     );
   }
 
-  if (response.sync_token) {
+  if (response.sync_token && response.items.length !== 0) {
     const aggregatedSyncToken = syncToken.filter(item => item !== undefined);
     for (const token of aggregatedSyncToken) {
       return getSyncData(

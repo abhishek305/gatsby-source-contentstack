@@ -345,7 +345,7 @@ var getSyncData = /*#__PURE__*/function () {
               pagination_token: response.pagination_token
             }, responseKey, aggregatedResponse));
           case 7:
-            if (!response.sync_token) {
+            if (!(response.sync_token && response.items.length !== 0)) {
               _context8.next = 25;
               break;
             }
