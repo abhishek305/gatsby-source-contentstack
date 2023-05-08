@@ -347,52 +347,54 @@ var getSyncData = /*#__PURE__*/function () {
             }, responseKey, aggregatedResponse));
           case 7:
             if (!response.sync_token) {
-              _context8.next = 31;
+              _context8.next = 29;
               break;
             }
+            /**
+             * Below array would contain type --> 'asset_published', 'entry_published' sync tokens
+             * To make final sync call and concatenate the result if found any during on fetch request.
+             */
             aggregatedSyncToken = syncToken.filter(function (item) {
               return item !== undefined;
             });
-            console.log('aggr.. sync', aggregatedSyncToken);
             _iterator = _createForOfIteratorHelper(aggregatedSyncToken);
-            _context8.prev = 11;
+            _context8.prev = 10;
             _iterator.s();
-          case 13:
+          case 12:
             if ((_step = _iterator.n()).done) {
-              _context8.next = 23;
+              _context8.next = 21;
               break;
             }
             token = _step.value;
-            _context8.next = 17;
+            _context8.next = 16;
             return fetchCsData(url, config, query = {
               sync_token: token
             });
-          case 17:
+          case 16:
             syncResponse = _context8.sent;
-            console.log('Any new data...', syncResponse);
             aggregatedResponse.data = (_aggregatedResponse$d = aggregatedResponse.data) === null || _aggregatedResponse$d === void 0 ? void 0 : (_aggregatedResponse$d2 = _aggregatedResponse$d).concat.apply(_aggregatedResponse$d2, (0, _toConsumableArray2["default"])(syncResponse.items));
             aggregatedResponse.sync_token = syncResponse.sync_token;
+          case 19:
+            _context8.next = 12;
+            break;
           case 21:
-            _context8.next = 13;
+            _context8.next = 26;
             break;
           case 23:
-            _context8.next = 28;
-            break;
-          case 25:
-            _context8.prev = 25;
-            _context8.t0 = _context8["catch"](11);
+            _context8.prev = 23;
+            _context8.t0 = _context8["catch"](10);
             _iterator.e(_context8.t0);
-          case 28:
-            _context8.prev = 28;
+          case 26:
+            _context8.prev = 26;
             _iterator.f();
-            return _context8.finish(28);
-          case 31:
+            return _context8.finish(26);
+          case 29:
             return _context8.abrupt("return", aggregatedResponse);
-          case 32:
+          case 30:
           case "end":
             return _context8.stop();
         }
-      }, _callee8, null, [[11, 25, 28, 31]]);
+      }, _callee8, null, [[10, 23, 26, 29]]);
     })();
   });
   return function getSyncData(_x18, _x19, _x20, _x21) {
