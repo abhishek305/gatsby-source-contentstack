@@ -261,18 +261,21 @@ const getSyncData = async (
   if (response.sync_token) {
     const aggregatedSyncToken = syncToken.filter(item => item !== undefined);
     for (const token of aggregatedSyncToken) {
-      const syncResponse = await fetchCsData(
+      return getSyncData(
         url,
         config,
-        (query = { sync_token: token })
+        ((query = { sync_token: token }), responseKey, aggregatedResponse)
       );
-
-      aggregatedResponse.data = aggregatedResponse.data?.concat(
-        ...syncResponse.items
-      );
-      aggregatedResponse.sync_token = syncResponse.sync_token
-        ? syncResponse.sync_token
-        : aggregatedResponse.sync_token;
+      // const syncResponse = await fetchCsData(
+      //   url,
+      //   config,
+      //   (query = { sync_token: token })
+      // );
+      // console.log('Any new data...', syncResponse);
+      // aggregatedResponse.data = aggregatedResponse.data?.concat(
+      //   ...syncResponse.items
+      // );
+      // aggregatedResponse.sync_token = syncResponse.sync_token;
     }
   }
 
